@@ -46,7 +46,7 @@ pub const SINK_STATE: u32 = 0u32;
 /// # }
 ///```
 #[serde_as]
-#[derive(Eq, PartialEq, Clone, Hash, Serialize, Deserialize)]
+#[derive(Eq, PartialEq, Clone, Hash, Serialize, Deserialize, Debug, PartialOrd, Ord)]
 pub struct DFA {
     #[serde_as(as = "Vec<[_; 256]>")]
     transitions: Vec<[u32; 256]>,
