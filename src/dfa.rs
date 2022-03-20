@@ -1,3 +1,6 @@
+use serde::{Serialize, Deserialize};
+use serde_with::serde_as;
+
 use super::Distance;
 
 /// Sink state. See [DFA](./index.html)
@@ -41,8 +44,11 @@ pub const SINK_STATE: u32 = 0u32;
 /// }
 /// let distance = dfa.distance(state);
 /// # }
-//```
+///```
+#[serde_as]
+#[derive(Eq, PartialEq, Clone, Hash, Serialize, Deserialize)]
 pub struct DFA {
+    #[serde_as(as = "Vec<[_; 256]>")]
     transitions: Vec<[u32; 256]>,
     distances: Vec<Distance>,
     initial_state: u32,

@@ -1,4 +1,5 @@
 use std::cmp::Ordering;
+use serde::{Serialize, Deserialize};
 
 #[cfg(test)]
 pub fn compute_characteristic_vector(query: &[char], c: char) -> u64 {
@@ -69,7 +70,7 @@ impl MultiState {
 ///
 /// Over this distance, the automaton will invariably
 /// return `Distance::AtLeast(max_distance + 1)`.
-#[derive(Eq, PartialEq, Debug, Clone, Copy)]
+#[derive(Eq, PartialEq, Debug, Clone, Copy, Hash, Serialize, Deserialize)]
 pub enum Distance {
     Exact(u8),
     AtLeast(u8),
