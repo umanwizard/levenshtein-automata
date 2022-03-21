@@ -70,7 +70,7 @@ impl MultiState {
 ///
 /// Over this distance, the automaton will invariably
 /// return `Distance::AtLeast(max_distance + 1)`.
-#[derive(Eq, PartialEq, Debug, Clone, Copy, Hash, Serialize, Deserialize)]
+#[derive(Eq, PartialEq, Debug, Clone, Copy, Hash, Serialize, Deserialize, PartialOrd, Ord)]
 pub enum Distance {
     Exact(u8),
     AtLeast(u8),
@@ -93,35 +93,35 @@ impl Distance {
     }
 }
 
-impl PartialOrd for Distance {
-    fn partial_cmp(&self, other: &Distance) -> Option<Ordering> {
-        use self::Distance::*;
-        match (*self, *other) {
-            (Exact(left), Exact(right)) => left.partial_cmp(&right),
-            (Exact(left), AtLeast(right)) => {
-                if right > left {
-                    Some(Ordering::Greater)
-                } else {
-                    None
-                }
-            }
-            (AtLeast(left), Exact(right)) => {
-                if left > right {
-                    Some(Ordering::Less)
-                } else {
-                    None
-                }
-            }
-            (AtLeast(left), AtLeast(right)) => {
-                if left == right {
-                    Some(Ordering::Equal)
-                } else {
-                    None
-                }
-            }
-        }
-    }
-}
+// impl PartialOrd for Distance {
+//     fn partial_cmp(&self, other: &Distance) -> Option<Ordering> {
+//         use self::Distance::*;
+//         match (*self, *other) {
+//             (Exact(left), Exact(right)) => left.partial_cmp(&right),
+//             (Exact(left), AtLeast(right)) => {
+//                 if right > left {
+//                     Some(Ordering::Greater)
+//                 } else {
+//                     None
+//                 }
+//             }
+//             (AtLeast(left), Exact(right)) => {
+//                 if left > right {
+//                     Some(Ordering::Less)
+//                 } else {
+//                     None
+//                 }
+//             }
+//             (AtLeast(left), AtLeast(right)) => {
+//                 if left == right {
+//                     Some(Ordering::Equal)
+//                 } else {
+//                     None
+//                 }
+//             }
+//         }
+//     }
+// }
 
 pub struct LevenshteinNFA {
     max_distance: u8,
